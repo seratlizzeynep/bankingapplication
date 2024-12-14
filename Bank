@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class Bank {
+    public static void main(String[] args) {
+        CheckingAccount account = new CheckingAccount();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Account is created. What is the initial balance?");
+        double initialBalance = scanner.nextDouble();
+        account.deposit(initialBalance);
+        System.out.println("The balance is: " + account.getBalance());
+
+        while (true) {
+            System.out.println("Do you want to deposit or withdraw money? D or W (E for exit)");
+            String choice = scanner.next().toUpperCase();
+
+            if (choice.equals("E")) {
+                System.out.println("Exiting. Have a great day!");
+                break;
+            } else if (choice.equals("D")) {
+                System.out.println("Please enter the amount:");
+                double amount = scanner.nextDouble();
+                account.deposit(amount);
+                System.out.println("The balance is: " + account.getBalance());
+            } else if (choice.equals("W")) {
+                System.out.println("Please enter the amount:");
+                double amount = scanner.nextDouble();
+                try {
+                    account.withdraw(amount);
+                    System.out.println("The balance is: " + account.getBalance());
+                } catch (InsufficientFundsException e) {
+                    System.out.println("Sorry, but you are short $" + e.getAmount());
+                }
+            } else {
+                System.out.println("Invalid choice. Please choose D, W, or E.");
+            }
+        }
+
+    }
+}
